@@ -20,4 +20,4 @@ const streamSchema = new Schema({
   },
 });
 
-module.exports = bookSchema;
+module.exports = streamSchema;
