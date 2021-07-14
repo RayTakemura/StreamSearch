@@ -10,8 +10,6 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
 
 
-// const routes = require('./routes');
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -47,4 +45,4 @@ db.once('open', () => {
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
 
   });
-// });
+});
