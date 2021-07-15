@@ -28,7 +28,7 @@ function App() {
     <ApolloProvider client={client}>
         <Router>
           <>
-          <Navbar />
+          <Header/>
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route exact path="/login" component={Login}/>
