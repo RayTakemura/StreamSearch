@@ -2,8 +2,8 @@ const { Schema } = require('mongoose');
 
 // This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedSteams` array in User.js
 const streamSchema = new Schema({
-  // saved book id from Imdb 
-   streamId: {
+  // saved stream id from Imdb 
+    streamId: {
     type: String,
     required: true,
   },
