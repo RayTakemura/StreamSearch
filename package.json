@@ -19,5 +19,9 @@
   "homepage": "https://github.com/RayTakemura/StreamSearch#readme",
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2"
   }
 }
