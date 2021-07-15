@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const db = require('./config/connection');
+const db = require('./config/connections');
 // const { authMiddleware } = require('./utils/auth');
 
 //import ApolloServer
@@ -16,8 +16,8 @@ const PORT = process.env.PORT || 3001;
 //create a new apollo server and pass in our schema data 
 const server = new ApolloServer({ 
   typeDefs,
-  resolvers,
-  context: authMiddleware
+  resolvers
+  //context: authMiddleware
 });
 
 //integrate Apollo server with Express application as middleware

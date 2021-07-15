@@ -6,7 +6,7 @@ import { removeStreamId } from '../utils/localStorage';
 
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import { GET_ME } from '../utils/queries';
-//  import { REMOVE_STREAM } from '../utils/mutations';
+import { REMOVE_STREAM } from '../utils/mutations';
 
 
 const Profile = () => {
@@ -64,7 +64,7 @@ const Profile = () => {
           {userData.savedStreams?.map((stream) => {
             return (
               <Card key={stream.streamId} border="dark">
-                {book.image ? (
+                {stream.image ? (
                   <Card.Img
                     src={stream.image}
                     alt={`The poster for ${stream.title}`}

@@ -24,9 +24,8 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_STREAM = gql`
-  mutation saveStream($input: savedStream!){
-      saveStream(input: $input)
-      {
+  mutation saveStream($input: savedStream!) {
+      saveStream(input: $input) {
         _id: ID
         username: String
         email: String
@@ -40,8 +39,7 @@ export const SAVE_STREAM = gql`
         }
       }
   }
-`
-;
+`;
 
 export const REMOVE_STREAM = gql`
   mutation removeStream($streamId: ID!){
