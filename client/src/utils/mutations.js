@@ -23,10 +23,6 @@ export const ADD_USER = gql`
   }
 `;
 
-<<<<<<< HEAD
-
-
-=======
 export const SAVE_STREAM = gql`
   mutation saveStream($input: savedStream!) {
       saveStream(input: $input) {
@@ -64,4 +60,3 @@ export const REMOVE_STREAM = gql`
   }
 `
 ;
->>>>>>> 713259b7c537ba345aa725713bac8468027283b6
