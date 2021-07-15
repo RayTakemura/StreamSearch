@@ -6,11 +6,14 @@ export const QUERY_USER = gql`
         _id
         username
         email
-    }
-    streams{
-        _id
-        name
-        image
+        streamCount
+        savedStreams{
+            #_id
+            streamId
+            title
+            image
+            link
+        }
     }
 }
 `
