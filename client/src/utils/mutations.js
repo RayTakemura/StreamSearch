@@ -26,17 +26,17 @@ export const ADD_USER = gql`
 export const SAVE_STREAM = gql`
   mutation saveStream($input: savedStream!) {
       saveStream(input: $input) {
-        _id: ID
-        username: String
-        email: String
-        streamCount: Int
-        savedStreams: {
-               #_id
-               streamId: String
-               title: String
-               image: String
-               link: String
-        }
+        _id
+        username
+        email
+        streamCount
+        savedStreams {
+            #_id
+            streamId
+            title
+            image
+            link
+     }
       }
   }
 `;
@@ -45,17 +45,17 @@ export const REMOVE_STREAM = gql`
   mutation removeStream($streamId: ID!){
       removeStream(streamId: $streamId)
        {
-        _id: ID
-        username: String
-        email: String
-        streamCount: Int
-        savedStreams: {
-               #_id
-               streamId: String
-               title: String
-               image: String
-               link: String
-        }
+        _id
+        username
+        email
+        streamCount
+        savedStreams {
+            #_id
+            streamId
+            title 
+            image 
+            link 
+     }
       }
   }
 `
