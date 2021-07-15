@@ -13,7 +13,7 @@ export const LOGIN = gql`
 ;
 
 export const ADD_USER = gql`
-  mutation addUser($userName: String!, $email: String!, $password: String!) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
       token
       user {
@@ -23,29 +23,41 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_STREAM = gql`
-  mutation addStream($stream: ID!){
-      addStream(stream: $stream){
-        addLiked
-      }
-      stream{
-          _id
-          name
-          image
+export const SAVE_STREAM = gql`
+  mutation saveStream($input: savedStream!){
+      saveStream(input: $input)
+      {
+        _id: ID
+        username: String
+        email: String
+        streamCount: Int
+        savedStreams: {
+               #_id
+               streamId: String
+               title: String
+               image: String
+               link: String
+        }
       }
   }
 `
 ;
 
 export const REMOVE_STREAM = gql`
-  mutation removeStream($stream: ID!){
-      removeStream(stream: $stream){
-          removeStream
-      }
-      stream{
-          _id
-          name
-          image
+  mutation removeStream($streamId: ID!){
+      removeStream(streamId: $streamId)
+       {
+        _id: ID
+        username: String
+        email: String
+        streamCount: Int
+        savedStreams: {
+               #_id
+               streamId: String
+               title: String
+               image: String
+               link: String
+        }
       }
   }
 `
