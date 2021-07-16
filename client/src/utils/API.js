@@ -64,9 +64,11 @@ export const getMe = (token) => {
     })
     .then(response => {
       console.log(response);
+      return response.json();
     })
     .catch(err => {
       console.error(err);
+      return err;
     });
   };
   

@@ -3,6 +3,7 @@ import Hero from '../components/Hero'
 import Auth from '../utils/auth';
 import { searchRapid } from '../utils/API.js';
 import { saveStreamIds, getSavedStreamIds } from '../utils/localStorage';
+import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import { SAVE_STREAM } from '../utils/mutations';
 import {useMutation} from '@apollo/react-hooks';
@@ -36,17 +37,17 @@ const Home = () => {
     try {
       const response = await searchRapid(searchInput);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      // if (!response.ok) {
+      //   throw new Error('something went wrong!');
+      // }
 
       const { items } = await response.json();
 
       const streamData = items.map((stream) => ({
-        streamurl: stream.results.locations[0].url
-        // title: stream.title,
-        // image: stream.imageLinks?.thumbnail || '',
-        // link: stream.link,
+        streamId: stream.id,
+        title: stream.title,
+        image: stream.picture || '',
+        link: stream.results.locations[0].url
       }));
 
       console.log(setSearchedStreams(streamData));
@@ -89,7 +90,7 @@ const Home = () => {
         <main className="container">
             <div className="row d-flex justify-content-center mt-5">
                 <div className="col-md-5">
-                    <form className="input-group form" onSubmit={handleFormSubmit}>
+                    <form className="input-group form form-group" onSubmit={handleFormSubmit}>
                         <input 
                             // type="search" 
                             className="form-control rounded input" 
@@ -100,15 +101,43 @@ const Home = () => {
                             onChange={(e) => setSearchInput(e.target.value)}
                             aria-label="Search"
                             aria-describedby="search-addon" />
-                        <button type="button" className="btn btn-outline-primary">search</button>
+                        <button type="submit" className="btn btn-outline-primary">search</button>
                     </form>
                 </div>
             </div>
 
-            <div className="card-list">
-            {/* {movies}  */}
-            {/* {console.log(searchInput)} */}
-            </div>
+            <Container>
+        <h2>
+          {searchedStreams.length
+            ? `Viewing ${searchedStreams.length} results:`
+            : 'Search for a stream to begin'}
+        </h2>
+        <CardColumns>
+          {searchedStreams.map((stream) => {
+            return (
+              <Card key={stream.streamId} border='dark'>
+                {stream.image ? (
+                  <Card.Img src={stream.image} alt={`The cover for ${stream.title}`} variant='top' />
+                ) : null}
+                <Card.Body>
+                  <Card.Title>{stream.title}</Card.Title>
+                  <Card.Text>{stream.link}</Card.Text>
+                  {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveStream(stream.streamId)}>
+                      {savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)
+                        ? 'This stream has already been saved!'
+                        : 'Save this Stream!'}
+                    </Button>
+                  )}
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Container>
             
             <Hero />
         </main>
