@@ -54,19 +54,19 @@ export const getMe = (token) => {
   
   // make a search to imdb  api
   //https://rapidapi.com/apidojo/api/imdb8
-  export const searchGoogleBooks = (query) => {
-    return fetch(`https://imdb8.p.rapidapi.com/title/find?q=${query}`, {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-key": "00b44d7633msh8eddfec456e7a17p1f2a73jsnceff2b45582c",
-            "x-rapidapi-host": "imdb8.p.rapidapi.com"
-        }
+  export const searchRapid = (query) => {
+    return fetch(`https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup?term=${query}`, {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-key": "745e72bfb2mshcd1b1af9ded37c3p1ca71djsnfeb89c9db301",
+        "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
+      }
     })
     .then(response => {
-        console.log(response);
+      console.log(response);
     })
     .catch(err => {
-        console.error(err);
+      console.error(err);
     });
   };
   
