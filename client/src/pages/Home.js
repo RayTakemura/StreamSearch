@@ -37,22 +37,21 @@ const Home = () => {
     try {
       const response = await searchRapid(searchInput);
 
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
+      //console.log(response.json());
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
 
-      const { items } = await response.json();
-
-      const streamData = items.map((stream) => ({
+      const items  = await response.json();
+      console.log(items)
+      
+      const streamData = items.results.map((stream) => ({
         streamId: stream.id,
-        title: stream.title,
+        title: stream.name,
         image: stream.picture || '',
-        link: stream.results.locations[0].url
+        link: stream.locations[0].url,
+        
       }));
-
-      console.log(setSearchedStreams(streamData));
-      console.log(streamData);
-      console.log(searchInput)
 
       setSearchedStreams(streamData);
       setSearchInput('');
