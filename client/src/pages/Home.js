@@ -36,22 +36,21 @@ const Home = () => {
     try {
       const response = await searchRapid(searchInput);
 
+      //console.log(response.json());
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      const { items } = await response.json();
+      const items  = await response.json();
+      console.log(items)
 
-      const streamData = items.map((stream) => ({
-        streamurl: stream.results.locations[0].url
-        // title: stream.title,
-        // image: stream.imageLinks?.thumbnail || '',
-        // link: stream.link,
+      const streamData = items.results.map((stream) => ({
+        streamId: stream.id,
+        title: stream.name,
+        image: stream.picture || '',
+        link: stream.locations[0].url,
+        
       }));
-
-      console.log(setSearchedStreams(streamData));
-      console.log(streamData);
-      console.log(searchInput)
 
       setSearchedStreams(streamData);
       setSearchInput('');
@@ -89,7 +88,7 @@ const Home = () => {
         <main className="container">
             <div className="row d-flex justify-content-center mt-5">
                 <div className="col-md-5">
-                    <form className="input-group form" onSubmit={handleFormSubmit}>
+                    <form className="input-group form form-group" onSubmit={handleFormSubmit}>
                         <input 
                             // type="search" 
                             className="form-control rounded input" 
@@ -100,7 +99,7 @@ const Home = () => {
                             onChange={(e) => setSearchInput(e.target.value)}
                             aria-label="Search"
                             aria-describedby="search-addon" />
-                        <button type="button" className="btn btn-outline-primary">search</button>
+                        <button type="submit" className="btn btn-outline-primary">search</button>
                     </form>
                 </div>
             </div>
