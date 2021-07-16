@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Hero from '../components/Hero'
 import Auth from '../utils/auth';
-import { searchRapid } from '../utils/API.js';
+import { saveStream, searchGoogleBooks } from '../utils/API';
 import { saveStreamIds, getSavedStreamIds } from '../utils/localStorage';
 
 import { SAVE_STREAM } from '../utils/mutations';
 import {useMutation} from '@apollo/react-hooks';
 
-const Home = () => {
-    // create state for holding returned google api data
+const SearchStreams = () => {
+  // create state for holding returned google api data
   const [searchedStreams, setSearchedStreams] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
@@ -34,7 +33,7 @@ const Home = () => {
     }
 
     try {
-      const response = await searchRapid(searchInput);
+      const response = await searchGoogleBooks(searchInput);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -43,15 +42,11 @@ const Home = () => {
       const { items } = await response.json();
 
       const streamData = items.map((stream) => ({
-        streamurl: stream.results.locations[0].url
-        // title: stream.title,
-        // image: stream.imageLinks?.thumbnail || '',
-        // link: stream.link,
+        streamId: stream.id,
+        title: stream.title,
+        image: stream.imageLinks?.thumbnail || '',
+        link: stream.link,
       }));
-
-      console.log(setSearchedStreams(streamData));
-      console.log(streamData);
-      console.log(searchInput)
 
       setSearchedStreams(streamData);
       setSearchInput('');
@@ -61,7 +56,7 @@ const Home = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveStream = async (streamId) => {
+  const handleSaveStream = async (bstreamId) => {
     // find the book in `searchedBooks` state by the matching id
     const streamToSave = searchedStreams.find((stream) => stream.streamId === streamId);
 
@@ -85,34 +80,28 @@ const Home = () => {
       console.error(err);
     }
   };
-    return (
-        <main className="container">
-            <div className="row d-flex justify-content-center mt-5">
-                <div className="col-md-5">
-                    <form className="input-group form" onSubmit={handleFormSubmit}>
-                        <input 
-                            // type="search" 
-                            className="form-control rounded input" 
-                            type="text"
-                            name="query"
-                            placeholder="Search" 
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
-                            aria-label="Search"
-                            aria-describedby="search-addon" />
-                        <button type="button" className="btn btn-outline-primary">search</button>
-                    </form>
-                </div>
-            </div>
 
-            <div className="card-list">
-            {/* {movies}  */}
-            {/* {console.log(searchInput)} */}
-            </div>
-            
-            <Hero />
-        </main>
-    )
+  return(
+    <>
+    <form className="form" onSubmit={SearchStreams}>
+      <label className="label" htmlFor="query">
+        Media Title:
+      </label>
+      <input
+        className="input"
+        type="text"
+        name="query"
+        placeholder="search here"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <button className="button">Search</button>
+    </form>
+    <div className="card-list">
+      {movies} 
+    </div>
+  </>
+);
 }
 
-export default Home;
+export default SearchStreams;

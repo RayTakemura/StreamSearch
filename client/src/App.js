@@ -4,7 +4,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Profile from './pages/Profile';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './pages/Home';
+
 //import Login from './pages/Login';
 //import Signup from './pages/Signup';
 
@@ -40,6 +42,7 @@ function App() {
             <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
           </Switch>
           </>
+          <Footer/>
         </Router> 
     </ApolloProvider>
   );
