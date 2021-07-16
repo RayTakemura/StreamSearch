@@ -3,6 +3,7 @@ import Hero from '../components/Hero'
 import Auth from '../utils/auth';
 import { searchRapid } from '../utils/API.js';
 import { saveStreamIds, getSavedStreamIds } from '../utils/localStorage';
+import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
 import { SAVE_STREAM } from '../utils/mutations';
 import {useMutation} from '@apollo/react-hooks';
@@ -43,7 +44,7 @@ const Home = () => {
 
       const items  = await response.json();
       console.log(items)
-
+      
       const streamData = items.results.map((stream) => ({
         streamId: stream.id,
         title: stream.name,
@@ -104,10 +105,38 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className="card-list">
-            {/* {movies}  */}
-            {/* {console.log(searchInput)} */}
-            </div>
+            <Container>
+        <h2>
+          {searchedStreams.length
+            ? `Viewing ${searchedStreams.length} results:`
+            : 'Search for a stream to begin'}
+        </h2>
+        <CardColumns>
+          {searchedStreams.map((stream) => {
+            return (
+              <Card key={stream.streamId} border='dark'>
+                {stream.image ? (
+                  <Card.Img src={stream.image} alt={`The cover for ${stream.title}`} variant='top' />
+                ) : null}
+                <Card.Body>
+                  <Card.Title>{stream.title}</Card.Title>
+                  <Card.Text>{stream.link}</Card.Text>
+                  {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveStream(stream.streamId)}>
+                      {savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)
+                        ? 'This stream has already been saved!'
+                        : 'Save this Stream!'}
+                    </Button>
+                  )}
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Container>
             
             <Hero />
         </main>

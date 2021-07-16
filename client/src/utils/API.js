@@ -63,16 +63,5 @@ export const getMe = (token) => {
         "x-rapidapi-host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
       }
     })
-    // .then(response => {
-    //   console.log(response);
-    //   return response.json();
-    // })
-    // .then(response=> {
-    //   console.log(response)
-    // })
-    // .catch(err => {
-    //   console.error(err);
-    //   return err;
-    // });
   };
   
