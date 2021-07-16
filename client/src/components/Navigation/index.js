@@ -9,12 +9,12 @@ const Navigation = () => {
     // };
 
     return (
-        <nav className="text-center">
+        <nav className="col-md-2 my-3">
             {/* Insert more logic for logged in vs not-logged in later! */}
-            <>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Signup</Link>
-            </>
+            {/* <div className="d-flex justify-content-between"> */}
+                <Link className="m-3" to="/login">Login</Link>
+                <Link className="m-3"to="/signup">Signup</Link>
+            {/*</div> */}
         </nav>
     )
     

@@ -1,18 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
+import './index.css'
 
 const Header = () => {
 
     return (
-        <div className="container flex-row justify-space-between-lg justify-center align-center">
-            {/* title of the homepage */}
-            <Link to="/">
-                <h1>StreamSearch</h1>
-            </Link>
+        <header >
+            <div className="container">
+                <div className="row py-4 d-flex ">
+                    {/* title of the homepage */}
+                    <Link className="col-sm-10" to="/">
+                        <h1>StreamSearch</h1>
+                    </Link>
 
-            <Navigation />
-        </div>
+                    <Navigation />
+                </div>
+            </div>
+            
+        </header>
     )
 }
 

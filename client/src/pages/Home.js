@@ -1,9 +1,12 @@
 import React from 'react';
+import SearchBar from '../components/SearchBar';
+import Hero from '../components/Hero';
 
 const Home = () => {
     return (
-        <main>
-            home page!
+        <main className="container">
+            <SearchBar />
+            <Hero />
         </main>
     )
 }
