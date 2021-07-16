@@ -121,6 +121,7 @@ const Home = () => {
                 <Card.Body>
                   <Card.Title>{stream.title}</Card.Title>
                   <Card.Text>{stream.link}</Card.Text>
+                  {console.log(Auth.loggedIn())}
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)}

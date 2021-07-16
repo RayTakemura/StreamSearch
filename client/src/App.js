@@ -7,15 +7,14 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 
-//import Login from './pages/Login';
-//import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 // apollo provider to make every request work with server
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-  // uri: 'http://localhost:3001/graphql'
   request: operation => {
     const token = localStorage.getItem('id_token');
 
@@ -36,8 +35,8 @@ function App() {
           <Header/>
           <Switch>
             <Route exact path="/" component={Home}/>
-            {/* <Route exact path="/login" component={Login}/> */}
-            {/* <Route exact path="/signup" component={Signup}/> */}
+            <Route exact path="/login" component={Login}/>
+            <Route exact path="/signup" component={Signup}/>
             <Route exact path="/profile/:username?" component={Profile}/>
             <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
           </Switch>
