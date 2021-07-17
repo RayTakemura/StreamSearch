@@ -24,7 +24,11 @@ const client = new ApolloClient({
       }
     })
   },
-  uri: '/graphql'
+  uri: '/graphql',
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log('graphQLErrors', graphQLErrors)
+    console.log('networkError', networkError)
+  }
 });
 
 function App() {

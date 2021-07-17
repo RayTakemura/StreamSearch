@@ -31,10 +31,11 @@ function Signup() {
        }
 
        
+    console.log(formState);
     const mutationResponse = await addUser({
       variables: {
         email: formState.email, password: formState.password,
-        userName: formState.userName,
+        username: formState.username,
       }
     });
     const data = mutationResponse.data.addUser.token;
@@ -58,12 +59,12 @@ function Signup() {
       <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="username">
-          <label htmlFor="userName">User Name:</label>
+          <label htmlFor="username">User Name:</label>
           <input
             placeholder="Learnin"
-            name="userName"
-            type="userName"
-            id="userName"
+            name="username"
+            type="username"
+            id="username"
             onChange={handleChange}
           />
         </div>
