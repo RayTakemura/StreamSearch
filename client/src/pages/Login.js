@@ -35,7 +35,7 @@ function Login(props) {
       </Link>
 
       <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} noValidate validated={validated}>
         <div className="email">
           <label htmlFor="email">Email address:</label>
           <input
