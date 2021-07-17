@@ -3,7 +3,7 @@ import Hero from '../components/Hero'
 import Auth from '../utils/auth';
 import { searchRapid } from '../utils/API.js';
 import { saveStreamIds, getSavedStreamIds } from '../utils/localStorage';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import {  Container, Button, Card, CardColumns } from 'react-bootstrap';
 
 import { SAVE_STREAM } from '../utils/mutations';
 import {useMutation} from '@apollo/react-hooks';
@@ -17,7 +17,7 @@ const Home = () => {
   // create state to hold saved bookId values
   const [savedStreamIds, setSavedStreamIds] = useState(getSavedStreamIds());
 
-  const [saveStream, {error}] = useMutation(SAVE_STREAM );
+  const [saveStream] = useMutation(SAVE_STREAM );
 
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
@@ -37,13 +37,11 @@ const Home = () => {
     try {
       const response = await searchRapid(searchInput);
 
-      //console.log(response.json());
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
       const items  = await response.json();
-      console.log(items)
       
       const streamData = items.results.map((stream) => ({
         streamId: stream.id,
@@ -76,7 +74,7 @@ const Home = () => {
       const {data} = await saveStream({
         variables: { input: streamToSave }
       });
-
+      console.log(data);
       // if stream successfully saves to user's account, save stream id to state
       setSavedStreamIds([...savedStreamIds, streamToSave.streamId]);
     } catch (err) {
@@ -98,7 +96,6 @@ const Home = () => {
             <div className="col-md-5">
               <form className="input-group form form-group" onSubmit={handleFormSubmit}>
                 <input 
-                  // type="search" 
                   className="form-control rounded input" 
                   type="text"
                   name="query"

@@ -21,7 +21,7 @@ const typeDefs = gql `
 
     }
 
-    input savedStream {
+    input savedStreamInput {
         title: String
         streamId: String
         image: String
@@ -40,7 +40,7 @@ const typeDefs = gql `
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth 
-        saveStream(input: savedStream!): User
+        saveStream(input: savedStreamInput!): User
         removeStream(streamId: ID!): User
     }
 `;

@@ -16,6 +16,13 @@ const Profile = () => {
   
   const userData = data?.me || [];
 
+  //returning an empty array with 0 length
+  console.log(userData);
+  //returning undefined
+  console.log(data);
+  //returning false
+  console.log(loading);
+
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteStream = async (streamId) => {
@@ -40,9 +47,9 @@ const Profile = () => {
   };
 
   // if data isn't here yet, say so
-  if (!loading) {
-    return <h2>LOADING...</h2>;
-  }
+ // if (!loading) {
+    //return <h2>LOADING...</h2>;
+  //}
 
 
   return (
@@ -54,14 +61,14 @@ const Profile = () => {
       </Jumbotron>
       <Container>
         <h2>
-          {userData.savedStreams?.length
-            ? `Viewing ${userData.savedStreams.length} saved ${
-                userData.savedStreams.length === 1 ? "stream" : "streams"
+          {userData?.savedStreams?.length
+            ? `Viewing ${userData?.savedStreams?.length} saved ${
+                userData?.savedStreams.length === 1 ? "stream" : "streams"
               }:`
             : "You have no saved streams!"}
         </h2>
         <CardColumns>
-          {userData.savedStreams?.map((stream) => {
+          {userData?.savedStreams?.map((stream) => {
             return (
               <Card key={stream.streamId} border="dark">
                 {stream.image ? (
