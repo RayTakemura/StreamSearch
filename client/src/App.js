@@ -13,6 +13,7 @@ import Signup from './pages/Signup';
 // apollo provider to make every request work with server
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 const client = new ApolloClient({
   request: operation => {

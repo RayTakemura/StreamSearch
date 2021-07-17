@@ -2,19 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
+
 const Navigation = () => {
     const logout = event => {
         event.preventDefault();
         Auth.logout();
+        localStorage.clear();
     };
 
     return (
         <nav className="col-md-2 my-3">
            {Auth.loggedIn() ? (
             <>
-              <Link to="/profile">Me</Link>
+              <Link className="p-5" to="/profile">Profile</Link>
               <a href="/" onClick={logout}>
-                Logout
+                      Logout
               </a>
             </>
           ) : (

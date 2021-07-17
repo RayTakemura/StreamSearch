@@ -10,11 +10,12 @@ const resolvers = {
         me: async (parent, args, context) => {
 
             if(context.user) {
-                const userData = await User.findOne({})
+                const userData = await User.findOne({_id:context.user._id})
                 .select('-__v -password')
                 .populate('streams')
             
                 return userData;
+                console.log(userData);
             }
 
             throw new AuthenticationError('Not logged in')

@@ -24,14 +24,12 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_STREAM = gql`
-  mutation saveStream($input: savedStream!) {
+  mutation saveStream($input: savedStreamInput!) {
       saveStream(input: $input) {
         _id
         username
         email
-        streamCount
         savedStreams {
-            #_id
             streamId
             title
             image
