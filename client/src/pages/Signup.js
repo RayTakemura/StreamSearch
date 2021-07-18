@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from '@apollo/react-hooks';
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 
-function Signup(props) {
+function Signup() {
   const [formState, setFormState] = useState({ username: '', email: '', password: '' });
-  const [addUser] = useMutation(ADD_USER);
+  // set state for form validation
+  const [validated] = useState(false);
+  // set state for alert
+  const [showAlert, setShowAlert] = useState(false);
+
+  const [addUser, { error }] = useMutation(ADD_USER);
+
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [error]);
 
   const handleFormSubmit = async event => {
     event.preventDefault();
+       // check if form has everything (as per react-bootstrap docs)
+       const form = event.currentTarget;
+       if (form.checkValidity() === false) {
+         event.preventDefault();
+         event.stopPropagation();
+       }
+
+       
     console.log(formState);
     const mutationResponse = await addUser({
       variables: {
@@ -17,8 +38,8 @@ function Signup(props) {
         username: formState.username,
       }
     });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
+    const data = mutationResponse.data.addUser.token;
+    Auth.login(data);
   };
 
   const handleChange = event => {
