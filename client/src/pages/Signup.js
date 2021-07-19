@@ -8,15 +8,17 @@ import { Form, Button, Alert } from 'react-bootstrap';
 function Signup() {
   const [formState, setFormState] = useState({ username: '', email: '', password: '' });
   // set state for form validation
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   const [addUser, { error }] = useMutation(ADD_USER);
 
   const [emailErr, setEmailErr] = useState(false);
+  const [passErr, setPassErr] = useState(false);
 
   useEffect(() => {
+    validate();
     if (error) {
       setShowAlert(true);
     } else {
@@ -45,6 +47,8 @@ function Signup() {
   };
 
   const handleChange = event => {
+    validate();
+    validatePass();
     const { name, value } = event.target;
     setFormState({
       ...formState,
@@ -57,10 +61,24 @@ function Signup() {
   );
 
   const validate = () => {
+    
     if (!validEmail.test(formState.email)) {
        setEmailErr(true);
-    }
+       return true;
+    } 
+    setEmailErr(false);
+    return false;
  }; 
+
+ const validatePass = () => {
+    
+  if (!(formState.password.length > 5)) {
+     setPassErr(true);
+     return true;
+  } 
+  setPassErr(false);
+  return false;
+}; 
 
   return (
     
@@ -70,7 +88,7 @@ function Signup() {
         Go to Login
       </Link>
       <h2>Signup</h2>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form noValidate validated={validated}  onSubmit={handleFormSubmit}>
         <Alert
           dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'> 
           Something went wrong with your sign-up
@@ -100,6 +118,8 @@ function Signup() {
             onChange={handleChange}
             value={formState.email}
             required 
+            // validations={validate}
+            
           />
         </Form.Group>
         <Form.Group className="password">
@@ -115,11 +135,14 @@ function Signup() {
           />
         </Form.Group>
         <div className="submit-btn">
-          <Button disabled={!(formState.username && formState.email && formState.password )} onClick={validate} type="submit">
+          <Button disabled={!(formState.username && formState.email && !emailErr && !passErr && formState.password )}  type="submit"> 
+          {/* onClick={validate} */}
             Submit
           </Button>
         </div>
+        {/* {console.log(emailErr)} */}
         {emailErr && <p>Your email is invalid</p>}
+        {passErr  && <p>Your password is too short</p>}
         {error && <div>sign up failed</div>}
       </Form>
     </div>
