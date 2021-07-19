@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from '@apollo/react-hooks';
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
+import { Form, Button, Alert } from 'react-bootstrap';
 
 function Signup() {
   const [formState, setFormState] = useState({ username: '', email: '', password: '' });
@@ -12,6 +13,8 @@ function Signup() {
   const [showAlert, setShowAlert] = useState(false);
 
   const [addUser, { error }] = useMutation(ADD_USER);
+
+  const [emailErr, setEmailErr] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -30,7 +33,6 @@ function Signup() {
          event.stopPropagation();
        }
 
-       
     console.log(formState);
     const mutationResponse = await addUser({
       variables: {
@@ -50,50 +52,76 @@ function Signup() {
     });
   };
 
+  const validEmail = new RegExp(
+    '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+  );
+
+  const validate = () => {
+    if (!validEmail.test(formState.email)) {
+       setEmailErr(true);
+    }
+ }; 
+
   return (
+    
+
     <div className="login">
       <Link to="/login">
         Go to Login
       </Link>
-
       <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="username">
-          <label htmlFor="username">User Name:</label>
-          <input
+      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+        <Alert
+          dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'> 
+          Something went wrong with your sign-up
+        </Alert>
+        <Form.Group className="username">
+          <Form.Label htmlFor="username">User Name:</Form.Label>
+          <Form.Control
             placeholder="Learnin"
             name="username"
             type="username"
             id="username"
             onChange={handleChange}
+            value={formState.username}
+            required
           />
-        </div>
-        <div className="email">
-          <label htmlFor="email">Email:</label>
-          <input
+          <Form.Control.Feedback type='invalid' >
+            Username is required!
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="email">
+          <Form.Label htmlFor="email">Email:</Form.Label>
+          <Form.Control
             placeholder="youremail@test.com"
             name="email"
             type="email"
             id="email"
             onChange={handleChange}
+            value={formState.email}
+            required 
           />
-        </div>
-        <div className="password">
-          <label htmlFor="pwd">Password:</label>
-          <input
+        </Form.Group>
+        <Form.Group className="password">
+          <Form.Label htmlFor="pwd">Password:</Form.Label>
+          <Form.Control
             placeholder="******"
             name="password"
             type="password"
             id="pwd"
             onChange={handleChange}
+            value={formState.password}
+            required
           />
-        </div>
+        </Form.Group>
         <div className="submit-btn">
-          <button type="submit">
+          <Button disabled={!(formState.username && formState.email && formState.password )} onClick={validate} type="submit">
             Submit
-          </button>
+          </Button>
         </div>
-      </form>
+        {emailErr && <p>Your email is invalid</p>}
+        {error && <div>sign up failed</div>}
+      </Form>
     </div>
   );
 

@@ -71,10 +71,12 @@ const Home = () => {
     }
 
     try {
-      const {data} = await saveStream({
-        variables: { input: streamToSave }
+      const stream = {...streamToSave}
+      console.log(stream);
+      await saveStream({
+        variables: {input:{...stream} }//{ input: streamToSave }
       });
-      console.log(data);
+      
       // if stream successfully saves to user's account, save stream id to state
       setSavedStreamIds([...savedStreamIds, streamToSave.streamId]);
     } catch (err) {
@@ -120,7 +122,6 @@ const Home = () => {
                     <Card.Body>
                       <Card.Title>{stream.title}</Card.Title>
                       <Card.Text>{stream.link}</Card.Text>
-                      {console.log(Auth.loggedIn())}
                       {Auth.loggedIn() && (
                         <Button
                           disabled={savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)}

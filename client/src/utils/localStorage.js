@@ -24,7 +24,7 @@ export const getSavedStreamIds = () => {
     }
   
     const updatedSavedStreamIds = savedStreamIds?.filter((savedStreamId) => savedStreamId !== streamId);
-    localStorage.setItem('saved_Streams', JSON.stringify(updatedSavedStreamIds));
+    localStorage.setItem('saved_streams', JSON.stringify(updatedSavedStreamIds));
   
     return true;
   };
