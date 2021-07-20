@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero'
 import Auth from '../utils/auth';
+import { Link } from 'react-router-dom';
 import { searchRapid } from '../utils/API.js';
 import { saveStreamIds, getSavedStreamIds } from '../utils/localStorage';
 import {  Container, Button, Card, CardColumns } from 'react-bootstrap';
@@ -112,16 +113,20 @@ const Home = () => {
             </div>
           </div>
           <Container>
-            <CardColumns>
+            <CardColumns  style={{ columnCount:3, columnGap:"1.25rem", gridColumnGap:"1.25rem"}}>
               {searchedStreams.map((stream) => {
                 return (
-                  <Card key={stream.streamId} border='dark'>
+                  
+
+                    <Card style={{display:"inline-block", width:"100%" , marginBottom:'1.25rem'}} key={stream.streamId} border='dark' className="mx-3">
                     {stream.image ? (
-                      <Card.Img src={stream.image} alt={`The cover for ${stream.title}`} variant='top' />
+                      <Card.Img  src={stream.image} alt={`The cover for ${stream.title}`} variant='top' />
                     ) : null}
                     <Card.Body>
                       <Card.Title>{stream.title}</Card.Title>
-                      <Card.Text>{stream.link}</Card.Text>
+                      <Card.Link href={stream.link}>
+                        Watch here
+                      </Card.Link>
                       {Auth.loggedIn() && (
                         <Button
                           disabled={savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)}
@@ -133,7 +138,7 @@ const Home = () => {
                         </Button>
                       )}
                     </Card.Body>
-                  </Card>
+                  </Card>                  
                 );
               })}
             </CardColumns>
