@@ -138,7 +138,7 @@ const Home = () => {
               })}
             </CardColumns>
           </Container>
-          <Hero />
+          {(searchedStreams.length > 0) ? null : <Hero />}
         </main>
     )
 }

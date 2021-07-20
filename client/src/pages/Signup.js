@@ -118,8 +118,6 @@ function Signup() {
             onChange={handleChange}
             value={formState.email}
             required 
-            // validations={validate}
-            
           />
         </Form.Group>
         <Form.Group className="password">
@@ -136,11 +134,9 @@ function Signup() {
         </Form.Group>
         <div className="submit-btn">
           <Button disabled={!(formState.username && formState.email && !emailErr && !passErr && formState.password )}  type="submit"> 
-          {/* onClick={validate} */}
             Submit
           </Button>
         </div>
-        {/* {console.log(emailErr)} */}
         {emailErr && <p>Your email is invalid</p>}
         {passErr  && <p>Your password is too short</p>}
         {error && <div>sign up failed</div>}
