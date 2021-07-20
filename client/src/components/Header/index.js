@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navigation from '../Navigation';
 import './index.css'
+import logo from '../../assets/logo/logo2.gif';
 
 const Header = () => {
 
@@ -9,9 +10,12 @@ const Header = () => {
         <header >
             <div className="container">
                 <div className="row py-4 d-flex ">
+                    
                     {/* title of the homepage */}
                     <Link className="col-sm-10" to="/">
-                        <h1>StreamSearch</h1>
+                        <img className="logo" src={logo}/>
+                        <h1 className="title">StreamSearch</h1>
+                        
                     </Link>
 
                     <Navigation />
