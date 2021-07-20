@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from '@apollo/react-hooks';
 import { Link } from "react-router-dom";
 import { LOGIN } from "../utils/mutations"
 import Auth from "../utils/auth";
+import { Form, Button, Alert } from 'react-bootstrap';
+import './Login.css'
 
-function Login(props) {
+function Login() {
   const [formState, setFormState] = useState({ email: '', password: '' })
-  //const validated = useState(false);
+  const [validated, setValidated] = useState(false);
   const [login, { error }] = useMutation(LOGIN);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [emailErr, setEmailErr] = useState(false);
+  const [passErr, setPassErr] = useState(false);
+
+  useEffect(() => {
+    //validate();
+    if (error) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [error]);
 
   const handleFormSubmit = async event => {
     event.preventDefault();
@@ -21,6 +36,8 @@ function Login(props) {
   };
 
   const handleChange = event => {
+    validate();
+    validatePass();
     const { name, value } = event.target;
     setFormState({
       ...formState,
@@ -28,46 +45,82 @@ function Login(props) {
     });
   };
 
-  return (
-    <div className="container">
-      <Link to="/signup">
-        Go to Signup
-      </Link>
+  const validEmail = new RegExp(
+    '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+  );
 
-      <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="email">
-          <label htmlFor="email">Email address:</label>
-          <input
+  const validate = () => {
+    console.log(formState.email)
+    if (!validEmail.test(formState.email)) {
+       setEmailErr(true);
+       return true;
+    } 
+    setEmailErr(false);
+    return false;
+ }; 
+
+ const validatePass = () => {
+    console.log(formState.password)
+  if (!(formState.password.length > 4)) {
+     setPassErr(true);
+     return true;
+  } 
+  setPassErr(false);
+  return false;
+}; 
+
+  return (
+    <div className="my-5 d-flex justify-content-center ">
+      <div className="login" >
+        <Link to="/signup">
+          Go to Signup
+        </Link>
+
+        <h2>Login</h2>
+      <Form noValidate validated={validated}  onSubmit={handleFormSubmit}>
+        <Alert
+          dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'> 
+          Something went wrong with your log-in
+        </Alert>
+        <Form.Group className="email">
+          <Form.Label htmlFor="email">Email:</Form.Label>
+          <Form.Control
             placeholder="youremail@test.com"
             name="email"
             type="email"
             id="email"
+            onBlur={handleChange}
             onChange={handleChange}
+            value={formState.email}
+            required 
           />
-        </div>
-        <div className="password">
-          <label htmlFor="pwd">Password:</label>
-          <input
+        </Form.Group>
+        <Form.Group className="password">
+          <Form.Label htmlFor="pwd">Password:</Form.Label>
+          <Form.Control
             placeholder="******"
             name="password"
             type="password"
             id="pwd"
+            onBlur={handleChange}
             onChange={handleChange}
+            value={formState.password}
+            required
           />
-        </div>
-        {
-          error ? <div>
-            <p className="error-text" >The provided credentials are incorrect</p>
-          </div> : null
-        }
+        </Form.Group>
         <div className="submit-btn">
-          <button type="submit">
+          <Button disabled={!(formState.email && !emailErr && !passErr && formState.password )} type="submit"> 
             Submit
-          </button>
+          </Button>
         </div>
-      </form>
+        {emailErr && <p>Your email is invalid</p>}
+        {passErr  && <p>Your password is too short</p>}
+        {error && <div>log in failed</div>}
+      </Form>
     </div>
+    </div>
+    
+    
   );
 }
 

@@ -1,0 +1,9 @@
+.signup {
+    width: 25%;
+}
+
+@media screen and (max-width: 600px) {
+    .signup {
+        width: 75%;
+    }
+}

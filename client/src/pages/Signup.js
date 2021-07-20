@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import Auth from "../utils/auth";
 import { ADD_USER } from "../utils/mutations";
 import { Form, Button, Alert } from 'react-bootstrap';
+import './Signup.css'
 
 function Signup() {
   const [formState, setFormState] = useState({ username: '', email: '', password: '' });
@@ -61,7 +62,7 @@ function Signup() {
   );
 
   const validate = () => {
-    
+    console.log(formState.email)
     if (!validEmail.test(formState.email)) {
        setEmailErr(true);
        return true;
@@ -71,7 +72,7 @@ function Signup() {
  }; 
 
  const validatePass = () => {
-    
+    console.log(formState.password)
   if (!(formState.password.length > 5)) {
      setPassErr(true);
      return true;
@@ -82,66 +83,71 @@ function Signup() {
 
   return (
     
-
-    <div className="login">
-      <Link to="/login">
-        Go to Login
-      </Link>
-      <h2>Signup</h2>
-      <Form noValidate validated={validated}  onSubmit={handleFormSubmit}>
-        <Alert
-          dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'> 
-          Something went wrong with your sign-up
-        </Alert>
-        <Form.Group className="username">
-          <Form.Label htmlFor="username">User Name:</Form.Label>
-          <Form.Control
-            placeholder="Learnin"
-            name="username"
-            type="username"
-            id="username"
-            onChange={handleChange}
-            value={formState.username}
-            required
-          />
-          <Form.Control.Feedback type='invalid' >
-            Username is required!
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="email">
-          <Form.Label htmlFor="email">Email:</Form.Label>
-          <Form.Control
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-            value={formState.email}
-            required 
-          />
-        </Form.Group>
-        <Form.Group className="password">
-          <Form.Label htmlFor="pwd">Password:</Form.Label>
-          <Form.Control
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-            value={formState.password}
-            required
-          />
-        </Form.Group>
-        <div className="submit-btn">
-          <Button disabled={!(formState.username && formState.email && !emailErr && !passErr && formState.password )}  type="submit"> 
-            Submit
-          </Button>
-        </div>
-        {emailErr && <p>Your email is invalid</p>}
-        {passErr  && <p>Your password is too short</p>}
-        {error && <div>sign up failed</div>}
-      </Form>
+    <div className="my-5 d-flex justify-content-center ">
+      <div className="signup">
+        <Link to="/login">
+          Go to Login
+        </Link>
+        <h2>Signup</h2>
+        <Form noValidate validated={validated}  onSubmit={handleFormSubmit}>
+          <Alert
+            dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'> 
+            Something went wrong with your sign-up
+          </Alert>
+          <Form.Group className="username">
+            <Form.Label htmlFor="username">User Name:</Form.Label>
+            <Form.Control
+              placeholder="Learnin"
+              name="username"
+              type="username"
+              id="username"
+              onChange={handleChange}
+              onBlur={handleChange}
+              value={formState.username}
+              required
+            />
+            <Form.Control.Feedback type='invalid' >
+              Username is required!
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="email">
+            <Form.Label htmlFor="email">Email:</Form.Label>
+            <Form.Control
+              placeholder="youremail@test.com"
+              name="email"
+              type="email"
+              id="email"
+              onBlur={handleChange}
+              onChange={handleChange}
+              value={formState.email}
+              required 
+            />
+          </Form.Group>
+          <Form.Group className="password">
+            <Form.Label htmlFor="pwd">Password:</Form.Label>
+            <Form.Control
+              placeholder="******"
+              name="password"
+              type="password"
+              id="pwd"
+              onBlur={handleChange}
+              onChange={handleChange}
+              value={formState.password}
+              required
+            />
+          </Form.Group>
+          <div className="submit-btn">
+            <Button disabled={!(formState.username && formState.email && !emailErr && !passErr && formState.password )}  type="submit"> 
+              Submit
+            </Button>
+          </div>
+          {emailErr && <p>Your email is invalid</p>}
+          {passErr  && <p>Your password is too short</p>}
+          {error && <div>sign up failed</div>}
+        </Form>
+      </div>
     </div>
+    
   );
 
 }
