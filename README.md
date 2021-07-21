@@ -13,12 +13,13 @@ I want to be able to click on a show/movie and for it to link out to the externa
 
 
 
-## Example
 
 ### Screenshot Examples
-![alt text]()
+![alt text](https://github.com/RayTakemura/StreamSearch/blob/c47c02eca5643baa0949ac2450d2674a36b255be/client/src/assets/examples/Home.png)
+![alt text](https://github.com/RayTakemura/StreamSearch/blob/c47c02eca5643baa0949ac2450d2674a36b255be/client/src/assets/examples/Search.png)
+![alt text](https://github.com/RayTakemura/StreamSearch/blob/c47c02eca5643baa0949ac2450d2674a36b255be/client/src/assets/examples/UserProfile.png)
 
 ## Created By Team Awesome
-Latoya 
-Michelle <https://github.com/MichelleHirano>
-Ray
+Latoya https://github.com/latoyadawson <br />
+Michelle <https://github.com/MichelleHirano> <br />
+Ray <https://github.com/RayTakemura>
