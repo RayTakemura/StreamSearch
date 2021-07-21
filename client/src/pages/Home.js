@@ -8,6 +8,7 @@ import {  Container, Button, Card, CardColumns } from 'react-bootstrap';
 
 import { SAVE_STREAM } from '../utils/mutations';
 import {useMutation} from '@apollo/react-hooks';
+import './Home.css';
 
 const Home = () => {
   // create state for holding returned google api data
@@ -112,20 +113,17 @@ const Home = () => {
               </form>
             </div>
           </div>
-          <Container>
-            <CardColumns  style={{ columnCount:3, columnGap:"1.25rem", gridColumnGap:"1.25rem"}}>
+            <div className="d-flex flex-wrap justify-content-center">
               {searchedStreams.map((stream) => {
                 return (
-                  
-
-                    <Card style={{display:"inline-block", width:"100%" , marginBottom:'1.25rem'}} key={stream.streamId} border='dark' className="mx-3">
+                    <Card style={{ marginBottom:'1.25rem'}} key={stream.streamId} border='dark' className="mx-3">
                     {stream.image ? (
                       <Card.Img  src={stream.image} alt={`The cover for ${stream.title}`} variant='top' />
                     ) : null}
                     <Card.Body>
                       <Card.Title>{stream.title}</Card.Title>
                       <Card.Link href={stream.link}>
-                        Watch here
+                        Watch here!
                       </Card.Link>
                       {Auth.loggedIn() && (
                         <Button
@@ -138,11 +136,11 @@ const Home = () => {
                         </Button>
                       )}
                     </Card.Body>
-                  </Card>                  
+                  </Card>
                 );
               })}
-            </CardColumns>
-          </Container>
+            </div>
+              
           {(searchedStreams.length > 0) ? null : <Hero />}
         </main>
     )
