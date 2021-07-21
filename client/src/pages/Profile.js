@@ -1,6 +1,5 @@
 import React from 'react';
-import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Jumbotron, Container, Card, Button } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { removeStreamId } from '../utils/localStorage';
 
@@ -55,22 +54,22 @@ const Profile = () => {
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
-        <Container>
-          <h1>Viewing saved streams!</h1>
-        </Container>
+
+
       </Jumbotron>
       <Container>
-        <h2>
+        <h2 className="py-4">
           {userData?.savedStreams?.length
             ? `Viewing ${userData?.savedStreams?.length} saved ${
                 userData?.savedStreams.length === 1 ? "stream" : "streams"
               }:`
             : "You have no saved streams!"}
         </h2>
-        <CardColumns>
+        <div className="d-flex flex-wrap justify-content-center">
+        {/* <CardColumns> */}
           {userData?.savedStreams?.map((stream) => {
             return (
-              <Card key={stream.streamId} border="dark">
+              <Card style={{ marginBottom:'1.25rem'}} key={stream.streamId} border='dark' className="mx-3"  >
                 {stream.image ? (
                   <Card.Img
                     src={stream.image}
@@ -80,21 +79,24 @@ const Profile = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{stream.title}</Card.Title>
-                  <Card.Link>
-                    <Link to={stream.link}></Link>
-                   </Card.Link>
+                  <Card.Link href={stream.link}>
+                      Watch here!
+                  </Card.Link>
+                  <br></br>
+                  <br></br>
                   <Button
-                    className="btn-block btn-danger"
+                    className="btn-block btn-danger btn-info"
                     onClick={() => handleDeleteStream(stream.streamId)}
                   >
-                    Delete
+                    Delete  
                   </Button>
                   {error && <div>Login failed</div>}
                 </Card.Body>
               </Card>
             );
           })}
-        </CardColumns>
+        {/* </CardColumns> */}
+        </div>
       </Container>
     </>
   );

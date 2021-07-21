@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from '@apollo/react-hooks';
 import Auth from "../utils/auth";
@@ -9,7 +9,7 @@ import './Signup.css'
 function Signup() {
   const [formState, setFormState] = useState({ username: '', email: '', password: '' });
   // set state for form validation
-  const [validated, setValidated] = useState(false);
+  const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
@@ -17,15 +17,6 @@ function Signup() {
 
   const [emailErr, setEmailErr] = useState(false);
   const [passErr, setPassErr] = useState(false);
-
-  useEffect(() => {
-    validate();
-    if (error) {
-      setShowAlert(true);
-    } else {
-      setShowAlert(false);
-    }
-  }, [error]);
 
   const handleFormSubmit = async event => {
     event.preventDefault();

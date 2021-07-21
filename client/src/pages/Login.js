@@ -8,7 +8,7 @@ import './Login.css'
 
 function Login() {
   const [formState, setFormState] = useState({ email: '', password: '' })
-  const [validated, setValidated] = useState(false);
+  const [validated] = useState(false);
   const [login, { error }] = useMutation(LOGIN);
 
   const [showAlert, setShowAlert] = useState(false);

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero'
 import Auth from '../utils/auth';
-import { Link } from 'react-router-dom';
 import { searchRapid } from '../utils/API.js';
 import { saveStreamIds, getSavedStreamIds } from '../utils/localStorage';
-import {  Container, Button, Card, CardColumns } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 
 import { SAVE_STREAM } from '../utils/mutations';
 import {useMutation} from '@apollo/react-hooks';
@@ -92,7 +91,7 @@ const Home = () => {
               <h2>
                 {searchedStreams.length
                   ? `Viewing ${searchedStreams.length} results:`
-                  : 'Search for a stream to begin'}
+                  : ''}
               </h2>
             </div>
           </div>
@@ -103,7 +102,7 @@ const Home = () => {
                   className="form-control rounded input" 
                   type="text"
                   name="query"
-                  placeholder="Search" 
+                  placeholder="Search for a Stream to Begin" 
                   value={searchInput}
                   onKeyDown={(e) => setSearchInput(e.target.value)}
                   onChange={(e) => setSearchInput(e.target.value)}
@@ -125,6 +124,8 @@ const Home = () => {
                       <Card.Link href={stream.link}>
                         Watch here!
                       </Card.Link>
+                      <br></br>
+                      <br></br>
                       {Auth.loggedIn() && (
                         <Button
                           disabled={savedStreamIds?.some((savedStreamId) => savedStreamId === stream.streamId)}
